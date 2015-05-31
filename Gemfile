@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'geokit-rails', github: 'geokit/geokit-rails'
 gem 'rails', '4.2.1'
 
 gem 'rails-api'
@@ -11,6 +11,8 @@ gem 'spring', :group => :development
 gem 'pg'
 
 gem 'httparty'
+
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
