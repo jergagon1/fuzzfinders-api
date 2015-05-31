@@ -17,6 +17,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 # To use ActiveModel has_secure_password
