@@ -14,6 +14,11 @@ gem 'httparty'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'rspec-mocks'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

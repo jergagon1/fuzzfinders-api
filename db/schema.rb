@@ -55,14 +55,4 @@ ActiveRecord::Schema.define(version: 20150530182648) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "username"
-    t.string   "email"
-    t.string   "password_hash"
-    t.integer  "zipcode"
-    t.integer  "wags"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
 end
