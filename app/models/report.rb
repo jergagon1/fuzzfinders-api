@@ -8,5 +8,5 @@ class Report < ActiveRecord::Base
                    lat_column_name: :lat,
                    lng_column_name: :lng
 
-  validates :user_id, presence: true
+  # validates :user_id, presence: true
 end

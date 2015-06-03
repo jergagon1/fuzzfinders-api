@@ -1,26 +1,5 @@
 class ReportsController < ApplicationController
-  # before_filter :cors_preflight_check
-  # after_filter :cors_set_access_control_headers
-
-  # def cors_set_access_control_headers
-  #   headers['Access-Control-Request-Method'] = '*'
-  #   headers['Access-Control-Allow-Origin'] = '*'
-  #   headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-  #   headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token'
-  #   headers['Access-Control-Max-Age'] = '1728000'
-  # end
-
-  # def cors_preflight_check
-  #   if request.method == 'OPTIONS'
-  #     headers['Access-Control-Allow-Origin'] = '*'
-  #     headers['Access-Control-Request-Method'] = '*'
-
-  #     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-  #     headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Token'
-  #     headers['Access-Control-Max-Age'] = '1728000'
-
-  #     render :text => '', :content_type => 'text/plain'
-  #   end
+  skip_before_filter :verify_authenticity_token, :only => [:mapquery]
     
   def create
     @report = Report.new report_params
@@ -30,7 +9,7 @@ class ReportsController < ApplicationController
   end
 
   def mapquery
-    #Example map query http://localhost:3001/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
+    #Example map query http://localhost:3001/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
     swa = params[:sw].split(',').map(&:to_f)
     nea = params[:ne].split(',').map(&:to_f)
     sw = Geokit::LatLng.new(swa.first, swa.last)  #Make the SW as a point instance in Geokit
