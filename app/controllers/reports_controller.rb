@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:mapquery]
+    
   def create
     @report = Report.new report_params
     @report.user_id = @current_user["id"]
@@ -7,7 +9,7 @@ class ReportsController < ApplicationController
   end
 
   def mapquery
-    #Example map query http://localhost:3001/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
+    #Example map query http://localhost:3001/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
     swa = params[:sw].split(',').map(&:to_f)
     nea = params[:ne].split(',').map(&:to_f)
     sw = Geokit::LatLng.new(swa.first, swa.last)  #Make the SW as a point instance in Geokit
