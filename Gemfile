@@ -11,6 +11,8 @@ gem 'spring', :group => :development
 gem 'pg'
 
 gem 'httparty'
+gem 'pusher', '~> 0.14.5'
+
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
