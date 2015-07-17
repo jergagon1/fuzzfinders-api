@@ -14,9 +14,9 @@ class ApplicationController < ActionController::API
   end
 
   # def current_user
-  #   # url = "http://localhost:3000/api/v1/logged_in?email=#{params[:email]}&password_hash=#{params[:password_hash]}"
-  #   # response = HTTParty.get(url)
-  #   # data = JSON.parse(response.body)
+    # url = "http://localhost:3000/api/v1/logged_in?email=#{params[:email]}&password_hash=#{params[:password_hash]}"
+    # response = HTTParty.get(url)
+    # data = JSON.parse(response.body)
   #   unless data["logged_in"]
   #     render json: "invalid credentials", status: 401
   #   else
