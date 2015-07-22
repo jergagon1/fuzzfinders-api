@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   match '/api/v1/log_out', to: 'users#log_out', via: [:put, :options]
 
   # FuzzFeed
-  match 'api/v1/articles', to: 'articles#index', via: [:get, :options]
-  match 'api/v1/articles/:id', to: 'articles#show', via: [:get, :options]
-  match 'api/v1/articles', to: 'articles#create', via: [:post, :options]
+  match '/api/v1/articles', to: 'articles#index', via: [:get, :options]
+  match '/api/v1/articles/:id', to: 'articles#show', via: [:get, :options]
+  match '/api/v1/articles', to: 'articles#create', via: [:post, :options]
 
 end
