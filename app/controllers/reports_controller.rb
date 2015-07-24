@@ -1,21 +1,17 @@
 class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:mapquery]
   require 'pusher'
-    
+
   def create
     p 'Params::'
     p params
     @report = Report.new report_params
-    @report.user_id = session[:user_id]
-      p @report.report_type 
-      type = @report.report_type
-
-    if @report.save 
-      pusher = Pusher::Client.new app_id: '130524', key: '3b5fcae47e2c2ecfad91', secret: '11ba4223aaf0d55bc501'
-      # trigger on my_channel' an event called 'my_event' with this payload:
+    if @report.save
+      # trigger a notification to Pusher service
+      pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
+      # trigger on channel 'fuzzflash' an event called 'report_created' with this payload:
       pusher.trigger('fuzzflash', 'report_created', {
-          :message => "Fuzzflash: #{@report.report_type} #{@report.animal_type}"
-
+        :message => "Fuzzflash: #{@report.report_type} #{@report.animal_type}"
       })
       render json: @report
     else
