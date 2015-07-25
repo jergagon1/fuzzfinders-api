@@ -4,5 +4,6 @@ class User < ActiveRecord::Base
   has_many :reports
   has_many :comments
   has_many :articles
+  has_many :remarks
 
 end
