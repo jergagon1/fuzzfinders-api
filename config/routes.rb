@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   match '/api/v1/logged_in', to: 'users#logged_in', via: [:get, :options]
   match '/api/v1/log_in', to: 'users#log_in', via: [:put, :options]
   match '/api/v1/log_out', to: 'users#log_out', via: [:put, :options]
+  match '/api/v1/wags', to: 'users#wags', via: [:get, :options]
 
   # FuzzFeed
   match '/api/v1/articles', to: 'articles#index', via: [:get, :options]
