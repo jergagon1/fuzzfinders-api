@@ -6,6 +6,8 @@ class ReportsController < ApplicationController
     p 'Params::'
     p params
     @report = Report.new report_params
+    @user = User.where(id: params[:report][:user_id]).first
+    p @user
     if @report.save
       # trigger a notification to Pusher service
       pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
@@ -13,7 +15,16 @@ class ReportsController < ApplicationController
       pusher.trigger('fuzzflash', 'report_created', {
         :message => "Fuzzflash: #{@report.report_type} #{@report.animal_type}"
       })
-      render json: @report
+      # todo: implement tags
+      # todo: implement update user wags if report_type is found pet
+      if @report.report_type == 'found'
+        p 'Update wags!!'
+        @user.wags += 1
+        @user.save
+        render json: { :report => @report, :wags => @user.wags }
+      else
+        render json: @report
+      end
     else
       puts 'report not saved'
     end

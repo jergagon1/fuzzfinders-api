@@ -31,6 +31,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def wags
+    find_user params
+    if @user
+      render json: { :wags => @user.wags }
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :email, :password_hash, :zipcode)
