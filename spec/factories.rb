@@ -1,4 +1,7 @@
-FactoryGirl.define do  factory :remark do
+FactoryGirl.define do  factory :article_tag do
+    
+  end
+  factory :remark do
     
   end
   factory :article do
