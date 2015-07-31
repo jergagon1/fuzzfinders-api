@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
   end
 
   def mapquery
-    #Example map query http://localhost:3001/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
+    #Example map query http://localhost:3000/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
     swa = params[:sw].split(',').map(&:to_f)
     nea = params[:ne].split(',').map(&:to_f)
     sw = Geokit::LatLng.new(swa.first, swa.last)  #Make the SW as a point instance in Geokit
@@ -43,6 +43,6 @@ class ReportsController < ApplicationController
   def report_params
     params.require(:report).permit(:pet_name, :animal_type, :lat, :lng,
                                    :user_id, :report_type, :notes, :img_url,
-                                   :age, :breed, :sex, :size, :distance)
+                                   :age, :breed, :sex, :size, :distance, :color)
   end
 end
