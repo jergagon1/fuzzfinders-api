@@ -16,12 +16,10 @@ class ReportsController < ApplicationController
       if @report.report_type == 'found'
         @user.wags += 1
         @user.save
-        render json: { :report => @report, :wags => @user.wags }
-      else
-        render json: @report
       end
+      render json: { :report => @report, :wags => @user.wags, :tags => @report.all_tags }
     else
-      puts 'report not saved'
+      render json: { :errors => :report.errors.full_messages }
     end
   end
 
