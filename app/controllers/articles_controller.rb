@@ -8,20 +8,21 @@ class ArticlesController < ApplicationController
     @article = Article.new article_params
     @article.user_id = session[:user_id]
     if @article.save
-      render json: @article, status: :created
+      render json: { :article => @article, :tags => @article.all_tags }, status: :created
     else
-      render "Article not saved"
+      render json: { :errors => @article.errors.full_messages }
     end
   end
 
   def show
     @article = Article.find(params[:id])
     @remarks = Remark.where(article_id: params[:id])
-    render :json => @article.to_json(:include => [:remarks])
+    @tags = @article.all_tags
+    render json: { :article => @article, :remarks => @remarks, :tags => @tags }
   end
 
   private
   def article_params
-    params.require(:article).permit(:title, :content, :user_id)
+    params.require(:article).permit(:title, :content, :user_id, :all_tags)
   end
 end
