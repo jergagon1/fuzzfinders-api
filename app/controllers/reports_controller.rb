@@ -23,6 +23,17 @@ class ReportsController < ApplicationController
     end
   end
 
+  def get_comments
+    @report = Report.find params[:report_id]
+    render json: @report.comments
+  end
+
+  def post_comment
+    @report = Report.find params[:report_id]
+    @comment = @report.comments.create(user_id: session[:user_id], content: params[:content])
+    render json: @comment
+  end
+
   def mapquery
     #Example map query http://localhost:3000/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
     swa = params[:sw].split(',').map(&:to_f)
