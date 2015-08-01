@@ -23,5 +23,9 @@ Rails.application.routes.draw do
   match '/api/v1/articles', to: 'articles#index', via: [:get, :options]
   match '/api/v1/articles/:id', to: 'articles#show', via: [:get, :options]
   match '/api/v1/articles', to: 'articles#create', via: [:post, :options]
+  match '/api/v1/articles/:article_id/remarks', to: 'remarks#index', via: [:get, :options]
+  match '/api/v1/articles/:article_id/remarks', to: 'remarks#create', via: [:post, :options]
+  match '/api/v1/articles/:article_id/remarks/:remark_id', to: 'remarks#update', via: [:put, :options]
+  match '/api/v1/articles/:article_id/remarks/:remark_id', to: 'remarks#destroy', via: [:delete, :options]
 
 end
