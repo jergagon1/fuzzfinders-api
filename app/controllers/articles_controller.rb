@@ -6,7 +6,6 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new article_params
-    @article.user_id = session[:user_id]
     if @article.save
       render json: { :article => @article, :tags => @article.all_tags }, status: :created
     else
