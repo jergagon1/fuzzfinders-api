@@ -23,15 +23,15 @@ class ReportsController < ApplicationController
     end
   end
 
-  def get_comments
+  def update
     @report = Report.find params[:report_id]
-    render json: @report.comments
+    @report.update_attributes report_params
+    render json: @report
   end
 
-  def post_comment
+  def destroy
     @report = Report.find params[:report_id]
-    @comment = @report.comments.create(user_id: session[:user_id], content: params[:content])
-    render json: @comment
+    render json: @report.destroy
   end
 
   def mapquery
