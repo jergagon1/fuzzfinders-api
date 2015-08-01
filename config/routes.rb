@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # FuzzFinders Reports
   match '/api/v1/reports', to: 'reports#create', via: [:post, :options]
 
+  match '/api/v1/report/:report_id/comments', to: 'reports#get_comments', via: [:get, :options]
+  match '/api/v1/report/:report_id/comments', to: 'reports#post_comment', via: [:post, :options]
+
   match 'api/v1/reports/mapquery', to: 'reports#mapquery', via: [:get, :options]
 
   # User Auth

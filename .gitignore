@@ -13,3 +13,6 @@
 /tmp
 
 /.env
+
+# Ignore swp files
+*.swp

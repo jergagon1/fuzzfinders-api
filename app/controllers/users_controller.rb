@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     find_user params
     if @user
       @user.update_attributes(logged_in: true)
-      session[:user] = @user
+      session[:user_id] = @user.id
       render json: @user
     end
   end
