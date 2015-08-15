@@ -18,7 +18,8 @@ class Report < ActiveRecord::Base
   end
 
   def all_tags
-    self.tags.map(&:name).join(", ")
+    # self.tags.map(&:name).join(", ")
+    self.tags
   end
 
 end
