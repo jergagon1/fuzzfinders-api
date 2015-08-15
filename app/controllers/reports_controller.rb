@@ -50,6 +50,7 @@ class ReportsController < ApplicationController
     render json: Report.in_bounds([sw, ne]).reverse_order #Get all Report instances from the database
   end
 
+
   private
   def report_params
     params.require(:report).permit(:pet_name, :animal_type, :lat, :lng,
