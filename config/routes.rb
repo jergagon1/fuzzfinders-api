@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   # FuzzFinders Reports
   match '/api/v1/reports', to: 'reports#create', via: [:post, :options]
+  match '/api/v1/reports/:report_id', to: 'reports#show', via: [:get, :options]
   match '/api/v1/reports/:report_id', to: 'reports#update', via: [:put, :options]
   match '/api/v1/reports/:report_id', to: 'reports#destroy', via: [:delete, :options]
 
