@@ -47,7 +47,8 @@ class ReportsController < ApplicationController
     nea = params[:ne].split(',').map(&:to_f)
     sw = Geokit::LatLng.new(swa.first, swa.last)  #Make the SW as a point instance in Geokit
     ne = Geokit::LatLng.new(nea.first, nea.last)  #Make the NE as a point instance in Geokit
-    render json: Report.in_bounds([sw, ne]).reverse_order #Get all Report instances from the database
+    @reports = Report.in_bounds([sw, ne]).reverse_order #Get all Report instances from the database
+    render json: @reports
   end
 
 
@@ -57,4 +58,5 @@ class ReportsController < ApplicationController
                                    :user_id, :report_type, :notes, :img_url,
                                    :age, :breed, :sex, :size, :distance, :color, :all_tags)
   end
+
 end
