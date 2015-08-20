@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   match '/api/v1/reports/:report_id/comments/:comment_id', to: 'comments#update', via: [:put, :options]
   match '/api/v1/reports/:report_id/comments/:comment_id', to: 'comments#destroy', via: [:delete, :options]
 
-  match 'api/v1/reports/mapquery', to: 'reports#mapquery', via: [:get, :options]
+  match '/api/v1/reports/mapquery', to: 'reports#mapquery', via: [:get, :options]
   match '/api/v1/reports/:report_id', to: 'reports#show', via: [:get, :options]
 
   # User Auth
