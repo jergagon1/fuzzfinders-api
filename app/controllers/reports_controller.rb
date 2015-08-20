@@ -7,15 +7,10 @@ class ReportsController < ApplicationController
     @user = User.where(id: params[:report][:user_id]).first
     if @report.save
       # trigger a notification to Pusher service
-      pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
-      # trigger on channel 'fuzzflash' an event called 'report_created' with this payload:
-      pusher.trigger('fuzzflash', 'report_created', {
-        :message => "Fuzzflash: #{@report.report_type} #{@report.animal_type}"
-      })
+      trigger_pusher_notification(@report)
       # update user wags if report_type is found pet
-      if @report.report_type == 'found'
-        @user.wags += 1
-        @user.save
+      if @report.report_type == "found"
+        update_wags(@user)
       end
       render json: { :report => @report, :wags => @user.wags, :tags => @report.all_tags }
     else
@@ -57,6 +52,21 @@ class ReportsController < ApplicationController
     params.require(:report).permit(:pet_name, :animal_type, :lat, :lng,
                                    :user_id, :report_type, :notes, :img_url,
                                    :age, :breed, :sex, :size, :distance, :color, :last_seen, :all_tags)
+  end
+
+  def trigger_pusher_notification report
+    # # trigger a notification to Pusher service
+    pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
+    # trigger on channel 'fuzzflash' an event called 'report_created' with this payload:
+    pusher.trigger('fuzzflash', 'report_created', {
+      :message => "Fuzzflash: #{report.report_type} #{report.animal_type}"
+    })
+  end
+
+  def update_wags user
+    # update user wags
+    user.wags += 1
+    user.save
   end
 
 end
