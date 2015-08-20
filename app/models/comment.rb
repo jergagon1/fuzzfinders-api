@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
 
   #TODO: what is the difference between as_json and to_json?
   def as_json options={}
-    attributes.merge({comment_user_email: user.email}).as_json
+    attributes.merge({comment_username: user.username}).as_json
   end
 
   def to_json
