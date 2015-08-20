@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
   def report_params
     params.require(:report).permit(:pet_name, :animal_type, :lat, :lng,
                                    :user_id, :report_type, :notes, :img_url,
-                                   :age, :breed, :sex, :size, :distance, :color, :all_tags)
+                                   :age, :breed, :sex, :size, :distance, :color, :last_seen, :all_tags)
   end
 
 end
