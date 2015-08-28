@@ -22,4 +22,12 @@ class Report < ActiveRecord::Base
     self.tags
   end
 
+  def as_json options={}
+    attributes.merge({report_username: user.username}).as_json
+  end
+
+  def to_json
+    as_json
+  end
+
 end
