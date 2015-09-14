@@ -76,10 +76,18 @@ class ReportsController < ApplicationController
   def trigger_pusher_notification report
     # trigger a notification to Pusher service
     pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
+    # handle edge case if no value is given for report.animal_type
+    if report.animal_type != ""
+      report_animal_type = report.animal_type.capitalize
+    else
+      report_animal_type = "Pet"
+    end
     # trigger on channel 'fuzzflash' an event called 'report_created' with this payload:
-    pusher.trigger('fuzzflash', 'report_created', {
-      :message => "Fuzzflash: #{report.report_type} #{report.animal_type}"
-    })
+    pusher.trigger(
+      'fuzzflash',
+      'report_created',
+      { :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}" }
+    )
   end
 
   def update_wags user
