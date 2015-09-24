@@ -73,6 +73,20 @@ class ReportsController < ApplicationController
     )
   end
 
+  # def index
+  #   @products = Product.where(nil)
+  #   filtering_params(params).each do |key, value|
+  #     @products = @products.public_send(key, value) if value.present?
+  #   end
+  # end
+
+
+
+  # A list of the param names that can be used for filtering the Report list
+  def filtering_params(params)
+    params.slice(:report_type, :animal_type, :starts_with)
+  end
+
   def trigger_pusher_notification report
     # trigger a notification to Pusher service
     pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
