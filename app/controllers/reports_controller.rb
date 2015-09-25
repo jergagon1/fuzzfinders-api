@@ -81,6 +81,7 @@ class ReportsController < ApplicationController
     params.slice(:report_type, :animal_type, :sex, :size, :age, :breed, :color)
   end
 
+  # trigger pusher notification on report creation
   def trigger_pusher_notification report
     # trigger a notification to Pusher service
     pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
@@ -98,6 +99,7 @@ class ReportsController < ApplicationController
     )
   end
 
+  # Update the users wags if make found pet report
   def update_wags user
     # update user wags
     user.wags += 1
