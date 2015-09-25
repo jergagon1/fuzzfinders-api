@@ -37,17 +37,20 @@ class ReportsController < ApplicationController
   end
 
   def mapquery
-    # Example map query:
-    # http://localhost:3000/api/v1/reports/mapquery?sw=37.70186970040842,-122.16973099925843&ne=37.70764178721548,-122.15589080074159
+    # To do review moving coordinate parsing to private controller method or filter in model
     swa = params[:sw].split(',').map(&:to_f)
     nea = params[:ne].split(',').map(&:to_f)
-    #Make the SW as a point instance in Geokit
+    # Make the SW as a point instance in Geokit
     sw = Geokit::LatLng.new(swa.first, swa.last)
-    #Make the NE as a point instance in Geokit
+    # Make the NE as a point instance in Geokit
     ne = Geokit::LatLng.new(nea.first, nea.last)
-    #Get all Report instances from the database
-    @reports = Report.in_bounds([sw, ne]).reverse_order
-    render json: @reports
+    # Use Geokit method to get report instances within map extents
+    @reports = Report.in_bounds([sw, ne])
+    # Review
+    filtering_params(params).each do |key, value|
+      @reports = @reports.public_send(key, value) if value.present?
+    end
+    render json: @reports.reverse_order
   end
 
   private
@@ -73,18 +76,9 @@ class ReportsController < ApplicationController
     )
   end
 
-  # def index
-  #   @products = Product.where(nil)
-  #   filtering_params(params).each do |key, value|
-  #     @products = @products.public_send(key, value) if value.present?
-  #   end
-  # end
-
-
-
-  # A list of the param names that can be used for filtering the Report list
+  # A whitelist of the param names that can be used for filtering the Report list
   def filtering_params(params)
-    params.slice(:report_type, :animal_type, :starts_with)
+    params.slice(:report_type, :animal_type, :sex, :size, :age, :breed, :color)
   end
 
   def trigger_pusher_notification report
