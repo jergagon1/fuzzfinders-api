@@ -12,6 +12,7 @@ class Report < ActiveRecord::Base
                    lng_column_name: :lng
   # validations
   # validates :user_id, presence: true
+  before_save :downcase_fields
 
   # tagging methods
   def all_tags=(names)
@@ -39,4 +40,9 @@ class Report < ActiveRecord::Base
   scope :breed, -> (breed) { where breed: breed }
   scope :color, -> (color) { where color: color }
 
+  private
+  def downcase_fields
+    self.breed.downcase! unless self.breed == ""
+    self.color.downcase! unless self.color == ""
+  end
 end
