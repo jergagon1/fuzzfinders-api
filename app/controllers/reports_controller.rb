@@ -1,3 +1,4 @@
+
 class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:mapquery]
   require 'pusher'
@@ -45,11 +46,7 @@ class ReportsController < ApplicationController
     # Make the NE as a point instance in Geokit
     ne = Geokit::LatLng.new(nea.first, nea.last)
     # Use Geokit method to get report instances within map extents
-    @reports = Report.in_bounds([sw, ne])
-    # Review
-    filtering_params(params).each do |key, value|
-      @reports = @reports.public_send(key, value) if value.present?
-    end
+    @reports = Report.filter(params.slice(:report_type, :animal_type, :sex, :pet_size, :age, :breed, :color)).in_bounds([sw, ne])
     render json: @reports.reverse_order
   end
 
@@ -74,11 +71,6 @@ class ReportsController < ApplicationController
       :all_tags,
       :report_username
     )
-  end
-
-  # A whitelist of the param names that can be used for filtering the Report list
-  def filtering_params(params)
-    params.slice(:report_type, :animal_type, :sex, :size, :age, :breed, :color)
   end
 
   # trigger pusher notification on report creation
