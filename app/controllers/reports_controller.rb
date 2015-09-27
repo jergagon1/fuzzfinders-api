@@ -64,7 +64,7 @@ class ReportsController < ApplicationController
       :age,
       :breed,
       :sex,
-      :size,
+      :pet_size,
       :distance,
       :color,
       :last_seen,

@@ -14,7 +14,7 @@ Report.create(
   report_type: "found",
   notes: "I found this dog",
   img_url: "http://www.example.com/lost_dog.jpg",
-  size: "small",
+  pet_size: "small",
   distance: 10.53,
   tags: [Tag.create(name: "black"), Tag.create(name: "friendly")]
 )
@@ -31,7 +31,7 @@ Report.create(
   age: "baby",
   breed: "german shephard",
   sex: "male",
-  size: "small",
+  pet_size: "small",
   distance: 0.00,
   tags: [Tag.create(name: "puppy")]
 )
