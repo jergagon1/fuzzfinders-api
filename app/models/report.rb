@@ -1,5 +1,6 @@
 class Report < ActiveRecord::Base
   include Filterable
+  before_save :downcase_fields
   # associations
   has_many :report_tags
   has_many :tags, through: :report_tags
@@ -12,7 +13,15 @@ class Report < ActiveRecord::Base
                    lng_column_name: :lng
   # validations
   # validates :user_id, presence: true
-  before_save :downcase_fields
+
+  # Scopes for Report filtering -> see Filterable module
+  scope :report_type, -> (report_type) { where report_type: report_type }
+  scope :animal_type, -> (animal_type) { where animal_type: animal_type }
+  scope :sex, -> (sex) { where sex: sex }
+  scope :pet_size, -> (pet_size) { where pet_size: pet_size }
+  scope :age, -> (age) { where age: age }
+  scope :breed, -> (breed) { where breed: breed }
+  scope :color, -> (color) { where color: color }
 
   # tagging methods
   def all_tags=(names)
@@ -30,15 +39,6 @@ class Report < ActiveRecord::Base
   def as_json options={}
     attributes.merge({report_username: user.username}).as_json
   end
-
-  # Scopes for Report filtering -> see Filterable module
-  scope :report_type, -> (report_type) { where report_type: report_type }
-  scope :animal_type, -> (animal_type) { where animal_type: animal_type }
-  scope :sex, -> (sex) { where sex: sex }
-  scope :size, -> (size) { where size: size }
-  scope :age, -> (age) { where age: age }
-  scope :breed, -> (breed) { where breed: breed }
-  scope :color, -> (color) { where color: color }
 
   private
   def downcase_fields
