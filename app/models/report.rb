@@ -26,6 +26,7 @@ class Report < ActiveRecord::Base
   # tagging methods
   def all_tags=(names)
     self.tags = names.split(",").map do |name|
+      name.downcase!
       Tag.where(name: name.strip).first_or_create!
     end
   end
@@ -34,10 +35,14 @@ class Report < ActiveRecord::Base
     self.tags
   end
 
+  def all_tags_string
+    self.tags.map(&:name).join(", ")
+  end
+
   # Add report creator's username to json output
   # Todo look at ActiveModel Serializers to improve this
   def as_json options={}
-    attributes.merge({report_username: user.username}).as_json
+    attributes.merge({report_username: user.username, report_taggings: self.all_tags_string}).as_json
   end
 
   private
