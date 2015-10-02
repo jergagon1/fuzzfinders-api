@@ -69,6 +69,7 @@ class ReportsController < ApplicationController
       :color,
       :last_seen,
       :all_tags,
+      :all_tags_string,
       :report_username
     )
   end
