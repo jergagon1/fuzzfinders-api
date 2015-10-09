@@ -11,7 +11,7 @@ class Report < ActiveRecord::Base
                    lat_column_name: :lat,
                    lng_column_name: :lng
   # validations
-  # validates :user_id, presence: true
+  validates :user_id, presence: true
 
   # Scopes for Report filtering -> see Filterable module
   scope :report_type, -> (report_type) { where report_type: report_type }
