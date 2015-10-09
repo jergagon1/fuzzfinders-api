@@ -13,7 +13,8 @@ class ReportsController < ApplicationController
       if @report.report_type == "found"
         update_wags(@user)
       end
-      render json: { :report => @report, :wags => @user.wags, :tags => @report.all_tags }
+      # render json: { :report => @report, :wags => @user.wags, :tags => @report.all_tags }
+      render json: { :report => @report, :wags => @user.wags }
     else
       render json: { :errors => :report.errors.full_messages }
     end
@@ -21,9 +22,11 @@ class ReportsController < ApplicationController
 
   def show
     @report = Report.find params[:report_id]
-    @tags = @report.all_tags
+    # @tags = @report.all_tags
     @comments = @report.comments
-    render json: { :report => @report, :tags => @tags, :comments => @comments }
+    # render json: { :report => @report, :tags => @tags, :comments => @comments }
+    render json: { :report => @report, :comments => @comments }
+
   end
 
   def update
@@ -68,8 +71,8 @@ class ReportsController < ApplicationController
       :distance,
       :color,
       :last_seen,
-      :all_tags,
-      :all_tags_string,
+      # :all_tags,
+      # :all_tags_string,
       :report_username
     )
   end

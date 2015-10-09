@@ -2,8 +2,6 @@ class Report < ActiveRecord::Base
   include Filterable
   before_save :downcase_fields
   # associations
-  has_many :report_tags
-  has_many :tags, through: :report_tags
   has_many :comments
   belongs_to :user
   acts_as_mappable default_units: :miles,
@@ -23,26 +21,12 @@ class Report < ActiveRecord::Base
   scope :breed, -> (breed) { where breed: breed }
   scope :color, -> (color) { where color: color }
 
-  # tagging methods
-  def all_tags=(names)
-    self.tags = names.split(",").map do |name|
-      name.downcase!
-      Tag.where(name: name.strip).first_or_create!
-    end
-  end
-
-  def all_tags
-    self.tags
-  end
-
-  def all_tags_string
-    self.tags.map(&:name).join(", ")
-  end
-
   # Add report creator's username to json output
   # Todo look at ActiveModel Serializers to improve this
   def as_json options={}
-    attributes.merge({report_username: user.username, report_taggings: self.all_tags_string}).as_json
+    # attributes.merge({report_username: user.username, report_taggings: self.all_tags_string}).as_json
+    attributes.merge({report_username: user.username}).as_json
+
   end
 
   private
