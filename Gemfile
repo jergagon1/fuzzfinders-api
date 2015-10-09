@@ -17,6 +17,8 @@ gem 'active_model_serializers'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
+gem 'acts-as-taggable-on', '~> 3.4'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'

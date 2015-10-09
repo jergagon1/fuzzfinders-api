@@ -46,6 +46,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (3.5.0)
+      activerecord (>= 3.2, < 5)
     arel (6.0.2)
     builder (3.2.2)
     database_cleaner (1.4.1)
@@ -152,6 +154,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  acts-as-taggable-on (~> 3.4)
   database_cleaner
   dotenv-rails
   factory_girl_rails
