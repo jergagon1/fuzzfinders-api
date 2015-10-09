@@ -13,8 +13,7 @@ class ReportsController < ApplicationController
       if @report.report_type == "found"
         update_wags(@user)
       end
-      # render json: { :report => @report, :wags => @user.wags, :tags => @report.all_tags }
-      render json: { :report => @report, :wags => @user.wags }
+      render json: { :report => @report, :wags => @user.wags, :tags => @report.tag_list }
     else
       render json: { :errors => :report.errors.full_messages }
     end
@@ -22,11 +21,9 @@ class ReportsController < ApplicationController
 
   def show
     @report = Report.find params[:report_id]
-    # @tags = @report.all_tags
+    @tags = @report.tags
     @comments = @report.comments
-    # render json: { :report => @report, :tags => @tags, :comments => @comments }
-    render json: { :report => @report, :comments => @comments }
-
+    render json: { :report => @report, :tags => @tags, :comments => @comments }
   end
 
   def update
@@ -41,15 +38,22 @@ class ReportsController < ApplicationController
   end
 
   def mapquery
-    # To do review moving coordinate parsing to private controller method or filter in model
     swa = params[:sw].split(',').map(&:to_f)
     nea = params[:ne].split(',').map(&:to_f)
     # Make the SW as a point instance in Geokit
     sw = Geokit::LatLng.new(swa.first, swa.last)
     # Make the NE as a point instance in Geokit
     ne = Geokit::LatLng.new(nea.first, nea.last)
-    # Use Geokit method to get report instances within map extents
-    @reports = Report.filter(params.slice(:report_type, :animal_type, :sex, :pet_size, :age, :breed, :color)).in_bounds([sw, ne])
+    if params[:filter_tags] != ""
+      # Filter reports per Filterable module
+      # Use Geokit in_bounds method to get report instances within map extents
+      # Filter by tags in parameters
+      @reports = Report.filter(params.slice(:report_type, :animal_type, :sex, :pet_size, :age, :breed, :color)).in_bounds([sw, ne]).tagged_with(params[:filter_tags], :any => true)
+    else
+      # Filter reports per Filterable module
+      # Use Geokit in_bounds method to get report instances within map extents
+      @reports = Report.filter(params.slice(:report_type, :animal_type, :sex, :pet_size, :age, :breed, :color)).in_bounds([sw, ne])
+    end
     render json: @reports.reverse_order
   end
 
@@ -71,8 +75,7 @@ class ReportsController < ApplicationController
       :distance,
       :color,
       :last_seen,
-      # :all_tags,
-      # :all_tags_string,
+      :tag_list,
       :report_username
     )
   end

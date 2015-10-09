@@ -1,4 +1,5 @@
 class Report < ActiveRecord::Base
+  acts_as_taggable
   include Filterable
   before_save :downcase_fields
   # associations
@@ -24,9 +25,7 @@ class Report < ActiveRecord::Base
   # Add report creator's username to json output
   # Todo look at ActiveModel Serializers to improve this
   def as_json options={}
-    # attributes.merge({report_username: user.username, report_taggings: self.all_tags_string}).as_json
-    attributes.merge({report_username: user.username}).as_json
-
+    attributes.merge({report_username: user.username, report_taggings: self.tag_list}).as_json
   end
 
   private
