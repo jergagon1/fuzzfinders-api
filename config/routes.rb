@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   match '/api/v1/reports/mapquery', to: 'reports#mapquery', via: [:get, :options]
   match '/api/v1/reports/:report_id', to: 'reports#show', via: [:get, :options]
+  match '/api/v1/status', to: 'reports#status', via: [:get, :options]
 
   # User Auth
   match '/api/v1/users', to: 'users#create', via: [:post, :options]

@@ -3,6 +3,10 @@ class ReportsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:mapquery]
   require 'pusher'
 
+  def status
+    render json: { value: "jeremy", user_count: User.all.count }
+  end
+
   def create
     @report = Report.new report_params
     @user = User.where(id: params[:report][:user_id]).first
@@ -94,7 +98,7 @@ class ReportsController < ApplicationController
     pusher.trigger(
       'fuzzflash',
       'report_created',
-      { 
+      {
         :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}",
         :report_id => report.id,
       }
