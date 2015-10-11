@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'geokit-rails', github: 'geokit/geokit-rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.4'
 
 gem 'rails-api'
 
