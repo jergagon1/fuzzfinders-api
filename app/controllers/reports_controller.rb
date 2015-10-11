@@ -94,7 +94,10 @@ class ReportsController < ApplicationController
     pusher.trigger(
       'fuzzflash',
       'report_created',
-      { :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}" }
+      { 
+        :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}",
+        :report_id => report.id,
+      }
     )
   end
 

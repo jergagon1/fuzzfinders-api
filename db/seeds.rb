@@ -16,7 +16,8 @@ Report.create(
   img_url: "http://www.example.com/lost_dog.jpg",
   pet_size: "small",
   distance: 10.53,
-  tags: [Tag.create(name: "black"), Tag.create(name: "friendly")]
+  breed: "golden retriever",
+  color: "yellow",
 )
 
 Report.create(
@@ -33,7 +34,7 @@ Report.create(
   sex: "male",
   pet_size: "small",
   distance: 0.00,
-  tags: [Tag.create(name: "puppy")]
+  color: "brown",
 )
 
 Comment.create(
