@@ -21,6 +21,8 @@ gem 'acts-as-taggable-on', '~> 3.4'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'rails_12factor'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'
