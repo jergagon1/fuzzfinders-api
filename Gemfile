@@ -19,6 +19,8 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'acts-as-taggable-on', '~> 3.4'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'
