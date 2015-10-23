@@ -101,6 +101,7 @@ class ReportsController < ApplicationController
       {
         :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}",
         :report_id => report.id,
+        :report_type => report.report_type,
       }
     )
   end
