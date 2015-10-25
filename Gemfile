@@ -37,7 +37,7 @@ end
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn', :group => :production
 
 # Deploy with Capistrano
 # gem 'capistrano', :group => :development
