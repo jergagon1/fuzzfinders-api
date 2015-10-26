@@ -23,6 +23,8 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'rails_12factor'
 
+gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'

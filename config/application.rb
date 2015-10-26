@@ -29,5 +29,16 @@ module FuzzfindersApi
       end
     end
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV['EMAIL_SMTP'],
+      port: 465,
+      # domain: ENV['MAILGUN_DOMAIN'], # CHANGE THIS
+      # authentication: "plain",
+      enable_starttls_auto: true,
+      user_name: ENV['EMAIL_USERNAME'], # CHANGE THIS
+      password: ENV['EMAIL_PASSWORD'] # CHANGE THIS
+    }
+
   end
 end

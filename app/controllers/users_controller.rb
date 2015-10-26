@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create user_params
     session[:user_id] = @user.id
+    p NotificationEmailer.welcome_email(@user)
     render json: @user
   end
 
