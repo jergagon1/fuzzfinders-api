@@ -7,11 +7,14 @@ class CommentsController < ApplicationController
   end
 
   def create
+    # Notify creator of report @report.user_id
+    # @original_poster = @report.user
     @report = Report.find params[:report_id]
     @comment = @report.comments.create comment_params
     if @comment.save
       trigger_pusher_notification(@comment)
     end
+    # NotificationEmailer.found_email(@original_poster) if @original_poster != @comment.user
     render json: @comment
   end
 
@@ -43,7 +46,7 @@ class CommentsController < ApplicationController
     pusher.trigger(
       "report_comments_#{comment.report_id}",
       'report_commented',
-      { 
+      {
         :message => "Comment by #{comment.user.username}: #{report.report_type} #{report.animal_type}",
         :comment_id => comment.id,
       }
