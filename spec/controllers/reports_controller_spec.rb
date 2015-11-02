@@ -4,7 +4,7 @@ RSpec.describe ReportsController, type: :controller do
 
   describe 'create' do
 
-    it 'it will post a report' do
+    xit 'it will post a report' do
 
       expect {post :create, {
         email: "blah@blah.com",
