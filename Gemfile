@@ -5,8 +5,6 @@ gem 'rails', '4.2.4'
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
-
 
 gem 'pg'
 
@@ -15,21 +13,38 @@ gem 'pusher', '~> 0.14.5'
 
 gem 'active_model_serializers'
 
-gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'acts-as-taggable-on', '~> 3.4'
 
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 
-gem 'rails_12factor'
+gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
 
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'
+  gem 'shoulda'
+
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+
+  gem 'dotenv-rails'
+
+  gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :development do
+  gem 'spring'
+end
+
+group :production do
+  gem 'unicorn'
+  gem 'rails_12factor'
 end
 
 # To use ActiveModel has_secure_password
@@ -37,9 +52,6 @@ end
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-gem 'unicorn', :group => :production
 
 # Deploy with Capistrano
 # gem 'capistrano', :group => :development

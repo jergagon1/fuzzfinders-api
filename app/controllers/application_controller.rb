@@ -1,11 +1,5 @@
 class ApplicationController < ActionController::API
-  # include ::ActionController::Serialization
+  respond_to :json
 
-  def find_user params
-    @user ||= User.find_by(
-      email: params[:email],
-      password_hash: params[:password_hash],
-    )
-  end
-
+  acts_as_token_authentication_handler_for User #, fallback: :none
 end
