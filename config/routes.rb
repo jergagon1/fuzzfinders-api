@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   # Devise Authentication
   scope :api do
     scope :v1 do
-      devise_for :users, controllers: { registrations: 'registrations' }
+      devise_for :users, controllers: {
+        registrations: 'registrations',
+        sessions: 'sessions'
+      }
     end
   end
 
