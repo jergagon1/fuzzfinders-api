@@ -15,4 +15,11 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :articles
   has_many :remarks
+
+  def update_coordinates!(latitude, longitude)
+    self.latitude = latitude
+    self.longitude = longitude
+
+    save
+  end
 end

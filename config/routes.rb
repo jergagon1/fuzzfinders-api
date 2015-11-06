@@ -32,7 +32,9 @@ Rails.application.routes.draw do
   # match '/api/v1/log_out', to: 'users#log_out', via: [:put, :options]
   match '/api/v1/wags', to: 'users#wags', via: [:get, :options]
 
-  # resources :users2, controller: :users2
+  resources :users do
+    post :update_coordinates, on: :collection
+  end
 
   # FuzzFeed
   match '/api/v1/articles', to: 'articles#index', via: [:get, :options]
