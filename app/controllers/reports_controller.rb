@@ -99,9 +99,11 @@ class ReportsController < ApplicationController
       'fuzzflash',
       'report_created',
       {
-        :message => "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}",
-        :report_id => report.id,
-        :report_type => report.report_type,
+        message: "Fuzzflash: #{report.report_type.capitalize} #{report_animal_type}",
+        report_id: report.id,
+        report_type: report.report_type,
+        latitude: report.lat,
+        longitude: report.lng
       }
     )
   end
