@@ -23,6 +23,10 @@ gem 'simple_token_authentication', '~> 1.0'
 
 gem 'mailgun-ruby', '~>1.0.3', require: 'mailgun'
 
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
+gem 'fog-aws'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-mocks'

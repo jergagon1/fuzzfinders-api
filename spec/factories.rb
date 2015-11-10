@@ -1,4 +1,8 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :image do
+    user nil
+image "MyString"
+  end
+
   factory :article_tag do
   end
 

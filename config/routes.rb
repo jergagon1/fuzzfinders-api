@@ -6,6 +6,8 @@ Rails.application.routes.draw do
         registrations: 'registrations',
         sessions: 'sessions'
       }
+
+      resources :images, only: [:create]
     end
   end
 
