@@ -103,7 +103,8 @@ class ReportsController < ApplicationController
         report_id: report.id,
         report_type: report.report_type,
         latitude: report.lat,
-        longitude: report.lng
+        longitude: report.lng,
+        user_id: report.user_id
       }
     )
   end
