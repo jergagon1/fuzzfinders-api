@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
   has_many :articles
   has_many :remarks
 
+  after_commit :send_notification
+
+  def send_notification
+    NotificationEmailer.welcome_email(self).deliver_now
+  end
+
   def update_coordinates!(latitude, longitude)
     self.latitude = latitude
     self.longitude = longitude
