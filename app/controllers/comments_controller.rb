@@ -10,10 +10,12 @@ class CommentsController < ApplicationController
     # Notify creator of report @report.user_id
     # @original_poster = @report.user
     @report = Report.find params[:report_id]
-    @comment = @report.comments.create comment_params
+    @comment = @report.comments.build comment_params
+
     if @comment.save
       trigger_pusher_notification(@comment)
     end
+
     # NotificationEmailer.found_email(@original_poster) if @original_poster != @comment.user
     render json: @comment
   end

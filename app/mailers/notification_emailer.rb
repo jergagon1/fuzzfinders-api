@@ -14,4 +14,12 @@ class NotificationEmailer < ApplicationMailer
 
     mail to: recipient.email, subject: 'Welcome to Fuzzfinders!'
   end
+
+  def new_report_comment(comment)
+    @comment = comment
+
+    reports_user = comment.report.user
+
+    mail to: reports_user.email, subject: 'New comment'
+  end
 end
