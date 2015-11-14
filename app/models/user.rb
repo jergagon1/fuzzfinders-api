@@ -16,10 +16,18 @@ class User < ActiveRecord::Base
   has_many :articles
   has_many :remarks
 
+  after_create :send_notification
+
   def update_coordinates!(latitude, longitude)
     self.latitude = latitude
     self.longitude = longitude
 
     save
+  end
+
+  private
+
+  def send_notification
+    NotificationEmailer.welcome_email(self).deliver_now if valid?
   end
 end
