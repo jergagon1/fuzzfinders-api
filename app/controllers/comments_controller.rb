@@ -46,11 +46,14 @@ class CommentsController < ApplicationController
     pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
     report = comment.report
     pusher.trigger(
-      "report_comments_#{comment.report_id}",
+      # "report_comments_#{comment.report_id}",
+      "report_commented", #{comment.report_id}",
       'report_commented',
       {
-        :message => "Comment by #{comment.user.username}: #{report.report_type} #{report.animal_type}",
-        :comment_id => comment.id,
+        report_id: report.id,
+        message: "Comment by #{comment.user.username}: #{report.report_type} #{report.animal_type}",
+        comment_id: comment.id,
+        comment: comment
       }
     )
   end
