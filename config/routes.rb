@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         passwords: 'passwords'
       }
 
+      resources :users, only: [:update]
+
       resources :images, only: [:create]
     end
   end
