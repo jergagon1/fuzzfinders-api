@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   after_create :send_notification
 
+  mount_uploader :image, ImageUploader
+
   def update_coordinates!(latitude, longitude)
     self.latitude = latitude
     self.longitude = longitude

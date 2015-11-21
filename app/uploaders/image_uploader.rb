@@ -32,6 +32,13 @@ class ImageUploader < CarrierWave::Uploader::Base
     process resize_to_fit: [1000, 1000]
   end
 
+  version :thumb do
+    process :exif_rotation
+    process :strip
+
+    process resize_to_fit: [100, 100]
+  end
+
   def md5
     chunk = model.send(mounted_as)
     @md5 ||= Digest::MD5.hexdigest(chunk.read.to_s)
