@@ -30,7 +30,7 @@ class Report < ActiveRecord::Base
 
   private
   def downcase_fields
-    self.breed.downcase! unless self.breed == ""
-    self.color.downcase! unless self.color == ""
+    self.breed.to_s.downcase!
+    self.color.to_s.downcase!
   end
 end
