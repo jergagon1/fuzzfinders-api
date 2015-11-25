@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
       end
       render json: { :report => @report, :wags => @user.wags, :tags => @report.tag_list }
     else
-      render json: { :errors => :report.errors.full_messages }
+      render json: { :errors => @report.errors.full_messages }
     end
   end
 
@@ -31,12 +31,14 @@ class ReportsController < ApplicationController
   end
 
   def update
+    # TODO: prevent updating reports that not belong to user
     @report = Report.find params[:report_id]
     @report.update_attributes report_params
     render json: @report
   end
 
   def destroy
+    # TODO: prevent removing reports that not belong to user
     @report = Report.find params[:report_id]
     render json: @report.destroy
   end
