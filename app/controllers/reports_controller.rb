@@ -91,11 +91,11 @@ class ReportsController < ApplicationController
     # trigger a notification to Pusher service
     pusher = Pusher::Client.new app_id: ENV['PUSHER_APP_ID'], key: ENV['PUSHER_KEY'], secret: ENV['PUSHER_SECRET']
     # handle edge case if no value is given for report.animal_type
-    if report.animal_type != ""
-      report_animal_type = report.animal_type.capitalize
-    else
-      report_animal_type = "Pet"
-    end
+    report_animal_type = if report.animal_type?
+                           report.animal_type.capitalize
+                         else
+                           'Pet'
+                         end
     # trigger on channel 'fuzzflash' an event called 'report_created' with this payload:
     pusher.trigger(
       'fuzzflash',
