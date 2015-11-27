@@ -1,6 +1,18 @@
-FactoryGirl.define do  factory :image do
+FactoryGirl.define do
+  factory :comment do
+    user
+    report
+    content 'content'
+  end
+
+  factory :subscription do
+    user
+    report
+  end
+
+  factory :image do
     user nil
-image "MyString"
+    image "MyString"
   end
 
   factory :article_tag do
@@ -23,6 +35,6 @@ image "MyString"
   factory :report do
     pet_name "Rebecca"
     animal_type "Micropig"
-    user_id 1
+    user
   end
 end

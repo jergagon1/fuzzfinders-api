@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :articles
   has_many :remarks
+  has_many :subscriptions
+
+  has_many :subscribed_reports, through: :subscriptions, source: :report
 
   after_create :send_notification
 
