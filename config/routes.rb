@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # Devise Authentication
   scope :api do
     scope :v1 do
@@ -8,8 +9,8 @@ Rails.application.routes.draw do
         passwords: 'passwords'
       }
 
+      resources :subscriptions, only: [:index]
       resources :users, only: [:update]
-
       resources :images, only: [:create]
     end
   end

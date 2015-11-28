@@ -6,17 +6,26 @@ class Comment < ActiveRecord::Base
   validates :report_id, presence: true
   validates :content, presence: true
 
-  after_create :send_notification
+  after_create :subscribe_user_and_notify_all
 
   #TODO: look at replacing overwriting as_json with Active Model Serializers
   def as_json(options={})
-    attributes.merge({comment_username: user.username}).as_json
+    attributes.merge({
+      comment_username: user.username,
+      subscriptions: user.subscribed_reports.ids
+    }).as_json
   end
 
   private
 
-  def send_notification
-    # TODO: do not send email if comment belongs to report's user
-    NotificationEmailer.new_report_comment(self).deliver_now if valid?
+  def subscribe_user_and_notify_all
+    user.subscriptions.create(report: report)
+
+    Notification.notify_about_new_comment_except_comments_user(self)
   end
+
+  # def send_notification
+  #   # TODO: do not send email if comment belongs to report's user
+  #   NotificationEmailer.new_report_comment(self).deliver_now if valid?
+  # end
 end
