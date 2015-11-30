@@ -1,6 +1,8 @@
 class Report < ActiveRecord::Base
   include Filterable
 
+  FIELDS_FOR_SLUG = %i(report_type animal_type pet_name)
+
   acts_as_taggable
 
   before_save :downcase_fields
@@ -56,11 +58,16 @@ class Report < ActiveRecord::Base
   private
 
   def generate_slug!
-    self.slug = %Q{
-      #{id}-#{%i(report_type animal_type pet_name).map do |field|
-        public_send(field).to_s.downcase.gsub(/\s+/, '-').gsub(/([^-a-z])/, '').presence
-      end.flatten.join('-')}
-      }.gsub("\n", '').gsub(/^\s+/, '').gsub(/\s+$/, '').gsub(/-+$/, '')
+    self.slug =
+      normalize_slug "#{id}-#{FIELDS_FOR_SLUG.map { |field| normalize_field(field) }.flatten.join('-')}"
+  end
+
+  def normalize_field(field)
+    public_send(field).to_s.downcase.gsub(/\s+/, '-').gsub(/([^-a-z])/, '').presence
+  end
+
+  def normalize_slug(slug)
+    slug.gsub("\n", '').gsub(/^\s+/, '').gsub(/\s+$/, '').gsub(/-+$/, '')
   end
 
   # update user wags if report_type is found pet
