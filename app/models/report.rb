@@ -7,6 +7,8 @@ class Report < ActiveRecord::Base
   after_save :subscribe_user_and_notify
   before_create :increment_wags!
 
+  after_save :generate_slug!
+
   # associations
   has_many :comments
 
@@ -52,6 +54,14 @@ class Report < ActiveRecord::Base
   end
 
   private
+
+  def generate_slug!
+    self.slug = %Q{
+      #{id}-#{%i(report_type animal_type pet_name).map do |field|
+        public_send(field).to_s.downcase.gsub(/\s+/, '-').gsub(/([^-a-z])/, '').presence
+      end.flatten.join('-')}
+      }.gsub("\n", '').gsub(/^\s+/, '').gsub(/\s+$/, '').gsub(/-+$/, '')
+  end
 
   # update user wags if report_type is found pet
   def increment_wags!

@@ -33,8 +33,8 @@ FactoryGirl.define do
   end
 
   factory :report do
-    pet_name "Rebecca"
-    animal_type "Micropig"
+    pet_name 'Rebecca'
+    animal_type 'Micropig'
     user
   end
 end
