@@ -43,8 +43,13 @@ class Report < ActiveRecord::Base
   def as_json options={}
     attributes.merge({
       report_username: user.username, report_taggings: tag_list,
-      subscriptions: user.subscribed_reports.ids
+      subscriptions: user.subscribed_reports.ids,
+      normalized_title: normalized_title
     }).as_json
+  end
+
+  def normalized_title
+    %Q{#{report_type.capitalize}#{animal_type? ? " #{animal_type.capitalize}" : ' Pet'}#{pet_name? ? " #{pet_name.capitalize}" : ''}}
   end
 
   def animal_type_normalized
@@ -58,8 +63,7 @@ class Report < ActiveRecord::Base
   private
 
   def generate_slug!
-    self.slug =
-      normalize_slug "#{id}-#{FIELDS_FOR_SLUG.map { |field| normalize_field(field) }.flatten.join('-')}"
+    update_column(:slug, normalize_slug("#{id}-#{FIELDS_FOR_SLUG.map { |field| normalize_field(field) }.flatten.join('-')}"))
   end
 
   def normalize_field(field)
