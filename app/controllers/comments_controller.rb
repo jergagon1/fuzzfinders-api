@@ -10,6 +10,8 @@ class CommentsController < ApplicationController
     @report = Report.find params[:report_id]
     @comment = @report.comments.build comment_params
 
+    @comment.user = current_user
+
     @comment.save
 
     # NotificationEmailer.found_email(@original_poster) if @original_poster != @comment.user

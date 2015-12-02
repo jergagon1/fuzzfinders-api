@@ -11,8 +11,8 @@ class Comment < ActiveRecord::Base
   #TODO: look at replacing overwriting as_json with Active Model Serializers
   def as_json(options={})
     attributes.merge({
-      comment_username: user.username,
-      subscriptions: user.subscribed_reports.ids
+      comment_username: user.try(:username),
+      subscriptions: user.try(:subscribed_reports).try(:ids)
     }).as_json
   end
 
