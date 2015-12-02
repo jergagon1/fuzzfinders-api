@@ -19,4 +19,48 @@ RSpec.describe Report, type: :model do
       end
     end
   end
+
+  describe 'Slug' do
+    subject { @report.slug }
+
+    context 'when every field filled' do
+      before do
+        @report = create :report, id: 42, pet_name: 'Sheldon', animal_type: 'Dog', report_type: 'Lost'
+      end
+
+      it { expect(subject).to eql '42-lost-dog-sheldon' }
+    end
+
+    context 'when only report type filled' do
+      before { @report = create :report, id: 42, report_type: 'Found', pet_name: '', animal_type: '' }
+
+      it { expect(subject).to eql '42-found' }
+    end
+
+    context 'when strange characters' do
+      before do
+        @report = create :report, id: 42,
+          report_type: 'Found', pet_name: '--<>+_(_?*)--',
+          animal_type: '(0&^%!@$__>/?\')'
+      end
+
+      it { expect(subject).to eql '42-found' }
+    end
+
+    context 'changes after update' do
+      before do
+        @report = create :report, id: 42, pet_name: 'Spiky', animal_type: 'Dog', report_type: 'Lost'
+      end
+
+      it { expect(subject).to eql '42-lost-dog-spiky' }
+
+      context 'update' do
+        before do
+          @report.update(pet_name: 'Spiky Junior', animal_type: 'Puppy', report_type: 'lost')
+        end
+
+        it { expect(subject).to eql '42-lost-puppy-spiky-junior' }
+      end
+    end
+  end
 end

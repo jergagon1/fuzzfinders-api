@@ -1,11 +1,15 @@
 class Report < ActiveRecord::Base
   include Filterable
 
+  FIELDS_FOR_SLUG = %i(report_type animal_type pet_name)
+
   acts_as_taggable
 
   before_save :downcase_fields
   after_save :subscribe_user_and_notify
   before_create :increment_wags!
+
+  after_save :generate_slug!
 
   # associations
   has_many :comments
@@ -39,8 +43,13 @@ class Report < ActiveRecord::Base
   def as_json options={}
     attributes.merge({
       report_username: user.username, report_taggings: tag_list,
-      subscriptions: user.subscribed_reports.ids
+      subscriptions: user.subscribed_reports.ids,
+      normalized_title: normalized_title
     }).as_json
+  end
+
+  def normalized_title
+    %Q{#{report_type.capitalize}#{animal_type? ? " #{animal_type.capitalize}" : ' Pet'}#{pet_name? ? " #{pet_name.capitalize}" : ''}}
   end
 
   def animal_type_normalized
@@ -52,6 +61,18 @@ class Report < ActiveRecord::Base
   end
 
   private
+
+  def generate_slug!
+    update_column(:slug, normalize_slug("#{id}-#{FIELDS_FOR_SLUG.map { |field| normalize_field(field) }.flatten.join('-')}"))
+  end
+
+  def normalize_field(field)
+    public_send(field).to_s.downcase.gsub(/\s+/, '-').gsub(/([^-a-z])/, '').presence
+  end
+
+  def normalize_slug(slug)
+    slug.gsub("\n", '').gsub(/^\s+/, '').gsub(/\s+$/, '').gsub(/-+$/, '')
+  end
 
   # update user wags if report_type is found pet
   def increment_wags!
