@@ -60,6 +60,10 @@ class Report < ActiveRecord::Base
     end.capitalize
   end
 
+  def to_param
+    slug
+  end
+
   private
 
   def generate_slug!
