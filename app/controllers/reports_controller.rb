@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
   end
 
   def show
-    @report = Report.find params[:report_id]
+    @report = Report.find params[:id]
     @tags = @report.tags
     @comments = @report.comments
     render json: { :report => @report, :tags => @tags, :comments => @comments }
@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
 
   def update
     # TODO: prevent updating reports that not belong to user
-    @report = Report.find params[:report_id]
+    @report = Report.find params[:id]
     @report.update_attributes report_params
     render json: @report
   end

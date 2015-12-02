@@ -3,3 +3,5 @@
 <p><%= @comment.user.username %></p>
 
 <%= simple_format @comment.content %>
+
+<p><%= link_to 'Link to Report', "#{ENV['CLIENT_URL']}/reports/#{@comment.report.slug}#comment-#{@comment.id}" %></p>
