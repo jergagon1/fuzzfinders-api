@@ -64,23 +64,12 @@ class ReportsController < ApplicationController
   private
   def report_params
     params.require(:report).permit(
-      :pet_name,
-      :animal_type,
-      :lat,
-      :lng,
-      :user_id,
-      :report_type,
-      :notes,
-      :img_url,
-      :age,
-      :breed,
-      :sex,
-      :pet_size,
-      :distance,
-      :color,
-      :last_seen,
-      :tag_list,
-      :report_username
+      :pet_name, :animal_type, :lat, :lng,
+      :user_id, :report_type, :notes,
+      :img_url, :age, :breed, :sex,
+      :pet_size, :distance, :color,
+      :last_seen, :tag_list, :report_username,
+      :address
     )
   end
 end
