@@ -6,15 +6,18 @@ class Comment < ActiveRecord::Base
   validates :report_id, presence: true
   validates :content, presence: true
 
-  after_create :subscribe_user_and_notify_all
+  after_commit :subscribe_user_and_notify_all
 
   #TODO: look at replacing overwriting as_json with Active Model Serializers
   def as_json(options={})
     attributes.merge({
       comment_username: user.try(:username),
-      subscriptions: user.try(:subscribed_reports).try(:ids)
+      subscriptions: user.try(:subscribed_reports).try(:ids),
+      image: image.url(:thumb)
     }).as_json
   end
+
+  mount_uploader :image, ImageUploader
 
   private
 
