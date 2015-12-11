@@ -91,6 +91,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    ffaker (2.1.0)
     fog-aws (0.7.6)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
@@ -264,6 +265,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_girl_rails
+  ffaker
   fog-aws
   geokit-rails!
   httparty
