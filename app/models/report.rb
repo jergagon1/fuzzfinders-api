@@ -9,6 +9,8 @@ class Report < ActiveRecord::Base
   after_save :subscribe_user_and_notify
   before_create :increment_wags!
 
+  before_destroy :destroy_subscriptions
+
   after_save :generate_slug!
 
   # associations
@@ -65,6 +67,10 @@ class Report < ActiveRecord::Base
   end
 
   private
+
+  def destroy_subscriptions
+    subscriptions.map &:destroy
+  end
 
   def generate_slug!
     update_column(:slug, normalize_slug("#{id}-#{FIELDS_FOR_SLUG.map { |field| normalize_field(field) }.flatten.join('-')}"))
