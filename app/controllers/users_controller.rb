@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :load_user
+  before_filter :load_user, except: :get_token
 
   def update_coordinates
     if @user && @user.update_coordinates!(params[:latitude], params[:longitude])
@@ -32,6 +32,11 @@ class UsersController < ApplicationController
     else
       render json: { status: 'Error', errors: @user.errors }
     end
+  end
+
+  def get_token
+    user = User.find_by(email: params[:user_email])
+    render json: {token: user.authentication_token} if user.valid_password?(params[:password])
   end
 
   private
