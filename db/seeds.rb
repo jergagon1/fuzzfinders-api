@@ -1,9 +1,10 @@
 User.create(
   username: "testuser",
   email: "testuser@example.com",
-  password_hash: "password",
+  password: "password",
+  password_confirmation: "password",
   zipcode: 12345,
-  wags: 0,
+  wags: 0
 )
 
 Report.create(
@@ -17,7 +18,7 @@ Report.create(
   pet_size: "small",
   distance: 10.53,
   breed: "golden retriever",
-  color: "yellow",
+  color: "yellow"
 )
 
 Report.create(
@@ -34,11 +35,11 @@ Report.create(
   sex: "male",
   pet_size: "small",
   distance: 0.00,
-  color: "brown",
+  color: "brown"
 )
 
 Comment.create(
   user: User.first,
   report: Report.first,
-  content: "blah blah blah",
+  content: "blah blah blah"
 )
