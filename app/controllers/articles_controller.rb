@@ -15,9 +15,8 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
-    @remarks = Remark.where(article_id: params[:id])
     @tags = @article.tags
-    render json: { :article => @article, :remarks => @remarks, :tags => @tags }
+    render json: { :article => @article, :tags => @tags }
   end
 
   private

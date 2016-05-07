@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
   has_many :reports
   has_many :comments
   has_many :articles
-  has_many :remarks
   has_many :subscriptions
 
   has_many :subscribed_reports, through: :subscriptions, source: :report
