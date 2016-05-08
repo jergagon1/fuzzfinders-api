@@ -35,8 +35,12 @@ class UsersController < ApplicationController
   end
 
   def get_token
-    user = User.find_by(email: params[:user_email])
-    render json: {token: user.authentication_token} if user.valid_password?(params[:password])
+    user = User.find_by(email: request.headers['HTTP_USER_EMAIL'])
+    if user && user.valid_password?(request.authorization)
+      render json: { token: user.authentication_token }
+    else
+      render json: { error: 'Invalid email or password' }
+    end
   end
 
   private
