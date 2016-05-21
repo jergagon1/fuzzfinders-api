@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :load_user, except: :get_token
+  # before_filter :load_user, except: :get_token
+  before_filter :load_user
 
   def update_coordinates
     if @user && @user.update_coordinates!(params[:latitude], params[:longitude])
@@ -34,14 +35,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def get_token
-    user = User.find_by(email: request.headers['HTTP_USER_EMAIL'])
-    if user && user.valid_password?(request.authorization)
-      render json: { token: user.authentication_token }
-    else
-      render json: { error: 'Invalid email or password' }
-    end
-  end
+  # def get_token
+  #   # user = User.find_by(email: request.headers['HTTP_USER_EMAIL'])
+  #   # if user && user.valid_password?(request.authorization)
+  #   #   render json: { token: user.authentication_token }
+  #   # else
+  #   #   render json: { error: 'Invalid email or password' }
+  #   # end
+  #   user = User.find_by(email: params[:user_email])
+  #   render json: {token: user.authentication_token} if user.valid_password?(params[:password])
+  # end
 
   private
 

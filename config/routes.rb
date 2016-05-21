@@ -10,9 +10,10 @@ Rails.application.routes.draw do
       }
 
       resources :subscriptions, only: [:index]
-      resources :users, only: [:update] do
-        get :get_token, on: :member
-      end
+      resources :users, only: [:update]
+      # resources :users, only: [:update] do
+      #   get :get_token, on: :member
+      # end
       resources :images, only: [:create]
 
       resources :reports, only: [:create, :update, :show] do
