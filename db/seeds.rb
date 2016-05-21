@@ -1,7 +1,7 @@
 User.create(
   username: "testuser",
   email: "testuser@example.com",
-  password: "password",
+  password_hash: "password",
   password_confirmation: "password",
   zipcode: 12345,
   wags: 0
